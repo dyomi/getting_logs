@@ -97,7 +97,7 @@ class GetLog:
                     logs[0], logs[1] = logs[1], logs[0]
         return logs
 
-    def saving_logs(self, data) -> None:
+    def saving_logs(self, data: dict) -> None:
         """Saves logs to the database."""
         if 'logs' in data:
             mapper(Logs, Log)
