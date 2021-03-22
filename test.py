@@ -8,6 +8,7 @@ class TestGetLog(TestCase):
 
     @patch('getting_logs.GetLog')
     def test_logs_get(self, MockGetLog):
+        """Tests getting logs."""
         logs = MockGetLog()
 
         logs.get.return_value = {
@@ -31,6 +32,7 @@ class TestGetLog(TestCase):
 
     @patch('getting_logs.GetLog')
     def test_error_get(self, MockGetLog):
+        """Tests getting logs."""
         logs = MockGetLog()
 
         logs.get.return_value = {
@@ -46,6 +48,7 @@ class TestGetLog(TestCase):
 
     @patch('getting_logs.GetLog')
     def test_saving_logs(self, mock_saving_logs):
+        """Tests saving logs."""
         return_value = {
             'error': '',
             'logs': [{
