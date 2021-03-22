@@ -1,5 +1,6 @@
-from json import decoder
 import logging
+from json import decoder
+from typing import Union
 
 import requests
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
@@ -64,11 +65,16 @@ Base.metadata.create_all(engine)
 
 
 class GetLog:
-    def get(self, date):
+    """Getting logs from a third-party resource,
+    processing them, and saving them to a local database."""
+
+    def get(self, date: Union[int, str]) -> dict:
+        """Gets log."""
         logs_get = requests.get(f'http://www.dsdev.tech/logs/{date}')
         return logs_get.json()
 
-    def sort_date(self, logs):
+    def sort_date(self, logs: list) -> list:
+        """Sorts logs by record creation date."""
         length = len(logs)
         if length > 2:
             part_1 = self.sort_date(logs[:length // 2])
@@ -91,18 +97,13 @@ class GetLog:
                     logs[0], logs[1] = logs[1], logs[0]
         return logs
 
-
-if __name__ == "__main__":
-    date = input()
-    get_log = GetLog()
-    try:
-        logs = get_log.get(date)
-
-        if 'logs' in logs:
+    def saving_logs(self, data) -> None:
+        """Saves logs to the database."""
+        if 'logs' in data:
             mapper(Logs, Log)
             mapper(Users, User)
 
-            sorted_logs = get_log.sort_date(logs['logs'])
+            sorted_logs = get_log.sort_date(data['logs'])
             logger.debug('Произошел запуск функции sort_date()')
             logger.info('Логи отсортированы.')
 
@@ -116,6 +117,14 @@ if __name__ == "__main__":
             logger.info('Логи с ошибкой в ожидании сохранения в БД.')
         session.commit()
         logger.info('Запись объектов в БД создана.')
+
+
+if __name__ == "__main__":
+    date = input()
+    get_log = GetLog()
+    try:
+        logs = get_log.get(date)
+        get_log.saving_logs(logs)
     except (
             requests.exceptions.RequestException,
             decoder.JSONDecodeError) as err:
