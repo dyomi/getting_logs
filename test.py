@@ -58,6 +58,7 @@ class TestGetLog(TestCase):
         }
         logs = Mock(return_value)
         mock_saving_logs.return_value = logs
-        print(mock_saving_logs.return_value)
         self.assertIsInstance(mock_saving_logs.return_value, dict,
                               'Сохранение в базу происходит неверно')
+        self.assertTrue(mock_saving_logs.return_value,
+                        'В базу данных нияего не сохраняется')
