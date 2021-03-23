@@ -1,5 +1,5 @@
 from unittest import TestCase
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 
 
 class TestGetLog(TestCase):
@@ -51,14 +51,3 @@ class TestGetLog(TestCase):
         self.assertEqual(response,
                          logs.get.return_value,
                          'Ошибка. Получены неверные данные.')
-
-    @patch('getting_logs.GetLog')
-    def test_saving_logs(self, mock_saving_logs):
-        """Tests saving logs."""
-        return_value = self.data
-        logs = Mock(return_value)
-        mock_saving_logs.return_value = logs
-        self.assertIsInstance(mock_saving_logs.return_value, dict,
-                              'Ошибка. Сохранение в базу происходит неверно')
-        self.assertTrue(mock_saving_logs.return_value,
-                        'Ошибка. В базу данных ничего не сохраняется')

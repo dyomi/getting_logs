@@ -107,7 +107,6 @@ class GetLog:
             logger.debug('Произошел запуск функции sort_date()')
             logger.info('Логи отсортированы.')
 
-            session.add_all([Users(i) for i in sorted_logs])
             session.add_all([Logs(i) for i in sorted_logs])
             logger.info('Логи в ожидании сохранения в БД.')
 
