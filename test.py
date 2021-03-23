@@ -36,17 +36,3 @@ class TestGetLog(TestCase):
             response,
             logs.get.return_value,
             'Ошибка. Получены неверные данные.')
-
-    @patch('getting_logs.GetLog')
-    def test_error_get(self, MockGetLog):
-        """Tests getting logs."""
-        logs = MockGetLog()
-
-        logs.get.return_value = self.error
-
-        response = logs.get()
-        self.assertIsNotNone(response, 'Ошибка. Пустой объект.')
-        self.assertIsInstance(response, dict, 'Ошибка. Получен не json.')
-        self.assertEqual(response,
-                         logs.get.return_value,
-                         'Ошибка. Получены неверные данные.')
