@@ -3,8 +3,7 @@ from unittest.mock import patch
 
 
 class TestGetLog(TestCase):
-    """Testing of getting logs from a third-party resource,
-    saving them to a local database."""
+    """Testing of getting logs from a third-party resource."""
 
     @classmethod
     def setUpClass(cls):
