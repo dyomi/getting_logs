@@ -64,6 +64,6 @@ class TestGetLog(TestCase):
         get_log.saving_logs(logs)
         self.assertEqual(MockGetLog, getting_logs.GetLog)
         self.assertIsNotNone(MockGetLog.called)
-        get_log.get.assert_called_with()
 
+        get_log.get.assert_called_with()
         get_log.saving_logs.assert_called_once_with(get_log.get.return_value)
